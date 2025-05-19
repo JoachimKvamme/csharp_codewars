@@ -7,14 +7,13 @@ namespace csharp_codewars
 {
     public class StringPermutations
     {
-        public static List<string> SinglePermutations(string list)
+
+        public static List<string> SinglePermutations(string s)
         {
+            var charlist = s.ToList();
 
-        int length = list.count()
-        if length == 1 return list;
+            if (charlist.Count() == 1) return charlist.Select(l => new List<string> {l})
 
-        
-        
         }
     }
 }
