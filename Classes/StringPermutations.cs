@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace csharp_codewars
 {
-    public class StringPermutations
+    public static class StringPermutations
     {
 
         public static List<string> SinglePermutations(string s)
