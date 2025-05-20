@@ -9,26 +9,26 @@ namespace csharp_codewars
     public static class StringPermutations
     {
 
-        public static void SinglePermutations(string s)
+        public static List<string> SinglePermutations(string s)
         {
+            List<string> result = new();
             char[] chars = s.ToArray();
-            SinglePermutations(chars, 0);
+            SinglePermutations(chars, 0, result);
+            return result.Distinct().ToList();
         }
 
-        private static void SinglePermutations(char[] list, int fi)
+        private static void SinglePermutations(char[] list, int fi, List<string> result)
         {
-
-            List<string> result = [];
 
             if (fi == list.Length - 1)
             {
-                Console.WriteLine(list);
+                result.Add(new string(list));
             }
             else
                 for (int i = fi; i < list.Length; i++)
                 {
                     Swap(ref list[fi], ref list[i]);
-                    SinglePermutations(list, fi + 1);
+                    SinglePermutations(list, fi + 1, result);
                     Swap(ref list[fi], ref list[i]);
                 }
         }
