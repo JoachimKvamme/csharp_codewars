@@ -11,12 +11,15 @@ namespace csharp_codewars.Classes
     {
         public static int SumIntervals((int, int)[] intervals)
         {
-
-            
-
-
-
-            return -1;
+            int sum = 0;
+            List<(int, int)> mergedIntervals = new();
+            intervals = MergeOverlappingIntervals(intervals);
+            foreach (var item in intervals)
+            {
+                sum += item.Item2 - item.Item1;
+            }
+            Console.WriteLine(intervals);
+            return sum;
         }
 
         public static bool CheckOverlap((int, int) firstPair, (int, int) secondPair)
@@ -26,9 +29,8 @@ namespace csharp_codewars.Classes
             return false;
         }
 
-        public static (int, int)[] MergeOverlappingIntervals((int, int)[] values)
+        public static void MergeOverlappingIntervals((int, int)[] values, List<(int, int)> mergedIntervals)
         {
-            List<(int, int)> mergedIntervals = new ();
             for (int i = 0; i < values.Length; i++)
             {
                 (int, int) first = values[i];
@@ -38,12 +40,17 @@ namespace csharp_codewars.Classes
                     if (CheckOverlap(first, second))
                     {
                         mergedIntervals.Add(MergeOverlappingIntervals(first, second));
+                        
+                        break;
+                    }
+                    if (j == values.Length - 1)
+                    {
+                        mergedIntervals.Add(first);
                     }
 
                 }
             }
 
-            return mergedIntervals.ToArray();
         }
 
         public static (int, int) MergeOverlappingIntervals((int, int) first, (int, int) second)
