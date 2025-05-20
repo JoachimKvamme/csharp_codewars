@@ -13,12 +13,17 @@ namespace csharp_codewars.Classes
         {
             int sum = 0;
             List<(int, int)> mergedIntervals = new();
-            intervals = MergeOverlappingIntervals(intervals);
-            foreach (var item in intervals)
+            MergeOverlappingIntervals(intervals, mergedIntervals);
+            mergedIntervals = mergedIntervals.Distinct().ToList();
+            foreach (var item in mergedIntervals)
+            {
+                Console.WriteLine(item);
+            }
+            foreach (var item in mergedIntervals)
             {
                 sum += item.Item2 - item.Item1;
             }
-            Console.WriteLine(intervals);
+
             return sum;
         }
 
@@ -39,43 +44,26 @@ namespace csharp_codewars.Classes
                     (int, int) second = values[j];
                     if (CheckOverlap(first, second))
                     {
-                        mergedIntervals.Add(MergeOverlappingIntervals(first, second));
-                        
-                        break;
-                    }
-                    if (j == values.Length - 1)
-                    {
-                        mergedIntervals.Add(first);
+                        Console.WriteLine("Overlap: " + first + " " + second);
+                        first = MergeOverlappingIntervals(new (int, int)[] { first, second });
+                        values = values.Where(n => n != second).ToArray();
+                        values[i] = first;
+
+
                     }
 
                 }
+                mergedIntervals.Add(first);
             }
 
         }
 
-        public static (int, int) MergeOverlappingIntervals((int, int) first, (int, int) second)
+        public static (int, int) MergeOverlappingIntervals((int, int)[] values)
         {
-            (int, int) result = (0, 0);
-
-            // Finds minimum
-            if (first.Item1 < second.Item1)
-            {
-                result.Item1 = first.Item1;
-            }
-            if (first.Item1 > second.Item1)
-            {
-                result.Item1 = second.Item1;
-            }
-            // finds maximum
-            if (first.Item2 > second.Item2)
-            {
-                result.Item2 = first.Item2;
-            }
-            if (first.Item2 < second.Item2)
-            {
-                result.Item2 = second.Item2;
-            }
-
+            int min = values.Min(m => m.Item1);
+            int max = values.Max(m => m.Item2);
+            (int, int) result = (min, max);
+            Console.WriteLine("merged: " + result);
             return result;
         }
     }
