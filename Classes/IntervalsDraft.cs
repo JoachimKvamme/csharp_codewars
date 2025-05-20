@@ -14,6 +14,7 @@ namespace csharp_codewars.Classes
             int sum = 0;
             Array.Sort(intervals, (a, b) => a.Item1.CompareTo(b.Item1));
             List<(int, int)> mergedIntervals = new();
+            mergedIntervals.Add(intervals[0]);
 
             MergeOverlappingIntervals(intervals, mergedIntervals);
             mergedIntervals = mergedIntervals.Distinct().ToList();
@@ -38,7 +39,22 @@ namespace csharp_codewars.Classes
 
         public static void MergeOverlappingIntervals((int, int)[] values, List<(int, int)> mergedIntervals)
         {
-            
+            for (int i = 1; i < values.Length; i++)
+            {
+                (int, int) last = mergedIntervals[mergedIntervals.Count - 1];
+                (int, int) current = values[i];
+                if (current.Item1 <= last.Item2)
+                {
+                    last.Item2 = current.Item2;
+                    Console.WriteLine("Merged: " + last + " " + current);
+                }
+                else
+                {
+
+                    mergedIntervals.Add(current);
+                    Console.WriteLine("Added: " + current);
+                }
+            }
 
         }
 
