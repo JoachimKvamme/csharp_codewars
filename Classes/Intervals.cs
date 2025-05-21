@@ -46,12 +46,6 @@ namespace csharp_codewars.Classes
                 mergedIntervals.Add((start, end));
             }
 
-            Console.WriteLine("List of merged intervals: ");
-            foreach (var item in mergedIntervals)
-            {
-                Console.WriteLine(item);
-            }
-
             return mergedIntervals;
 
         }
